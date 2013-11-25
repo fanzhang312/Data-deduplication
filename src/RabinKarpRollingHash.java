@@ -34,7 +34,6 @@ public class RabinKarpRollingHash {
 	}
 	
 	public void displayChunks(File filelocation) {
-//		String filelocation = "file.bin";
 		int mask = 1 << 13;
 		mask--; // 13 bit of '1's
 
