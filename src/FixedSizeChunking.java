@@ -31,7 +31,7 @@ public class FixedSizeChunking {
 					fis = new FileInputStream(f.getAbsolutePath());
 					while(fis.read(chunk) != -1){
 						// perform the hash on the chunk
-						String hashvalue = sum.fixedSizeChunking(chunk);
+						String hashvalue = sum.chunking(chunk);
 						// If not exist then save
 						if(!indexTable.containsKey(hashvalue)){
 							indexTable.put(hashvalue, f.getName());

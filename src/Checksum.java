@@ -50,7 +50,7 @@ public class Checksum {
 		return result;
 	}
 
-	public String fixedSizeChunking(byte[] dataBytes){
+	public String chunking(byte[] dataBytes){
 		md.update(dataBytes);
 		byte[] mdbytes = md.digest();
 		String result = byteToHex(mdbytes);
