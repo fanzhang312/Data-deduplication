@@ -11,10 +11,11 @@ public class FixedSizeChunking {
 	public int count;
 	private FileInputStream fis;
 
-	public FixedSizeChunking() {
+	public FixedSizeChunking(String directory) {
 		indexTable = new Hashtable<String, String>();
 		sum = new Checksum();
-		list = new FileList(Config.DIRECTORY);
+//		list = new FileList(Config.DIRECTORY);
+		list = new FileList(directory);
 		count = 0;
 	}
 
@@ -50,8 +51,4 @@ public class FixedSizeChunking {
 		}
 	}
 
-	public static void main(String[] args) {
-		FixedSizeChunking fsc = new FixedSizeChunking();
-		fsc.setAll(fsc.list.filelist);
-	}
 }

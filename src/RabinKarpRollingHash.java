@@ -23,10 +23,11 @@ public class RabinKarpRollingHash {
 	public FileList list;
 	public Checksum sum;
 	
-	public RabinKarpRollingHash(){
+	public RabinKarpRollingHash(String directory){
 		indexTable = new Hashtable<String, String>();
 		sum = new Checksum();
-		list = new FileList(Config.DIRECTORY);
+//		list = new FileList(Config.DIRECTORY);
+		list = new FileList(directory);
 		window = 1024; // initial window size
 	}
 	
@@ -162,8 +163,4 @@ public class RabinKarpRollingHash {
 		return hash;
 	}
 
-	public static void main(String[] args) {
-		RabinKarpRollingHash fsc = new RabinKarpRollingHash();
-		fsc.setAll(fsc.list.filelist);
-	}
 }

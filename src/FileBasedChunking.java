@@ -7,10 +7,11 @@ public class FileBasedChunking {
 	public FileList list;
 	public int count;
 
-	public FileBasedChunking() {
+	public FileBasedChunking(String directory) {
 		indexTable = new Hashtable<String, String>();
 		sum = new Checksum();
-		list = new FileList(Config.DIRECTORY);
+//		list = new FileList(Config.DIRECTORY);
+		list = new FileList(directory);
 		count = 0;
 	}
 
@@ -34,8 +35,4 @@ public class FileBasedChunking {
 		return indexTable.containsKey(hashvalue);
 	}
 
-	public static void main(String[] args) {
-		FileBasedChunking fbc = new FileBasedChunking();
-		fbc.setAll(fbc.list.filelist);
-	}
 }
