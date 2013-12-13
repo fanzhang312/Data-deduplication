@@ -45,7 +45,7 @@ public class Checksum {
 
 		String result = byteToHex(mdbytes);
 		
-		System.out.println(filename + " :: " + result);
+//		System.out.println(filename + " :: " + result);
 
 		return result;
 	}
