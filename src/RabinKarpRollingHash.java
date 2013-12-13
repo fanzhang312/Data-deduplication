@@ -4,11 +4,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Hashtable;
+
 /**
+ * Perform content defined chunking. Print out the number of chunks for each
+ * file and the number of duplicated chunks if greater than 0. The Rabin-Karp
+ * Rolling hash algorithm is learnt from Adam Horvath's blog. Modification is
+ * being made. Hashing the chunks and save the hash value into a index table.
  * 
- * The Rabin-Karp Rolling hash algorithm is learnt from Adam Horvath's blog. 
- * Modification is being made. Hashing the chunks and save the hash value into a index table.
- *
  * @author Fan Zhang, Zhiqi Chen
  */
 public class RabinKarpRollingHash {
@@ -22,29 +24,30 @@ public class RabinKarpRollingHash {
 	public Hashtable<String, String> indexTable;
 	public FileList list;
 	public Checksum sum;
-	
-	public RabinKarpRollingHash(String directory){
+
+	public RabinKarpRollingHash(String directory) {
 		indexTable = new Hashtable<String, String>();
 		sum = new Checksum();
-//		list = new FileList(Config.DIRECTORY);
+		// list = new FileList(Config.DIRECTORY);
 		list = new FileList(directory);
 		window = 1024; // initial window size
 	}
-	
+
 	// Initialize some value before start find chunks for each file
-	public void initialize(){
+	public void initialize() {
 		mult = 1;
 		buffptr = 0;
 	}
-	public void setAll(File[] fileList){
-		for(File file : fileList){
-			if(file.isFile() && !file.isHidden()){
+
+	public void setAll(File[] fileList) {
+		for (File file : fileList) {
+			if (file.isFile() && !file.isHidden()) {
 				initialize();
 				displayChunks(file);
 			}
 		}
 	}
-	
+
 	public void displayChunks(File filelocation) {
 		int mask = 1 << 13;
 		mask--; // 13 bit of '1's
@@ -62,12 +65,10 @@ public class RabinKarpRollingHash {
 
 			long length = bis.available();
 			long curr = length;
-			
 			// get the initial 1k hash window //
 			int hash = inithash(window);
-			
-			curr -= bis.available();
-			// //////////////////////////////////
+			curr -= bis.available(); // move the curr to next byte of the initial hash window
+
 			byte[] chunk = null;
 			String hashvalue = null;
 			boolean firstChunk = true;
@@ -76,25 +77,25 @@ public class RabinKarpRollingHash {
 			while (curr < length) {
 				if ((hash & mask) == 0) {
 					// window found - hash it,
-					if(firstChunk == true){
+					if (firstChunk == true) {
 						chunk = new byte[(int) curr];
 						firstChunk = false;
-					}else{
+					} else {
 						chunk = new byte[segment];
 					}
-					if(fsChunk.read(chunk) != -1){
+					if (fsChunk.read(chunk) != -1) {
 						// perform the hash on the chunk
 						hashvalue = sum.chunking(chunk);
 						// If not exist then save
-						if(!indexTable.containsKey(hashvalue)){
+						if (!indexTable.containsKey(hashvalue)) {
 							indexTable.put(hashvalue, f.getName());
-						}else{
+						} else {
 							// found duplicated chunks
 							duplicate++;
 						}
 					}
-					
-					segment=0;
+
+					segment = 0;
 					count++;
 				}
 				// next window's hash //
@@ -103,15 +104,16 @@ public class RabinKarpRollingHash {
 				segment++;
 			}
 			System.out.println(count + " chunks generated for: " + f.getName());
-			if(duplicate != 0){
-				System.out.println(duplicate + " duplicated chunks in: " + f.getName());
+			if (duplicate != 0) {
+				System.out.println(duplicate + " duplicated chunks in: "
+						+ f.getName());
 			}
 			bis.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			// clean up 
-			if(fs!=null){
+			// clean up
+			if (fs != null) {
 				try {
 					is.close();
 					fs.close();

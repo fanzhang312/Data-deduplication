@@ -3,7 +3,7 @@ public class RunDedup {
 	/**
 	 * Main function: Require user input type of chunking and the directory
 	 * 
-	 * @param args
+	 * @author Fan Zhang, Zhiqi Chen
 	 * 
 	 */
 	public static void main(String[] args) {

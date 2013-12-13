@@ -4,6 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Hashtable;
 
+/**
+ * Perform a fixed size de-duplication. Print out de-duplication results if
+ * there is duplicated data chunks
+ * 
+ * @author Fan Zhang, Zhiqi Chen
+ * 
+ */
 public class FixedSizeChunking {
 	public Hashtable<String, String> indexTable;
 	public Checksum sum;
@@ -14,7 +21,7 @@ public class FixedSizeChunking {
 	public FixedSizeChunking(String directory) {
 		indexTable = new Hashtable<String, String>();
 		sum = new Checksum();
-//		list = new FileList(Config.DIRECTORY);
+		// list = new FileList(Config.DIRECTORY);
 		list = new FileList(directory);
 		count = 0;
 	}

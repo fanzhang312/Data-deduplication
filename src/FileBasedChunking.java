@@ -1,6 +1,13 @@
 import java.io.File;
 import java.util.Hashtable;
 
+/**
+ * Perform a file based de-deuplication. Print out the results for duplicated
+ * files.
+ * 
+ * @author Fan Zhang, Zhiqi Chen
+ * 
+ */
 public class FileBasedChunking {
 	public Hashtable<String, String> indexTable;
 	public Checksum sum;
@@ -10,7 +17,7 @@ public class FileBasedChunking {
 	public FileBasedChunking(String directory) {
 		indexTable = new Hashtable<String, String>();
 		sum = new Checksum();
-//		list = new FileList(Config.DIRECTORY);
+		// list = new FileList(Config.DIRECTORY);
 		list = new FileList(directory);
 		count = 0;
 	}
