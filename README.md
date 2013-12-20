@@ -18,6 +18,12 @@ Two arguments are needed: deduplication type and directory
 	
 	Right now, only chunking and identify the duplicated data chunks are implemented. The deduplication part is not implemented.  
 	
-If export the source code into a runable jar file then could run as: 
+If export the source code into a runable jar file then could run as (Example): 
 
-`java -jar jarname.jar 1 /Users/fan/Documents`
+    java -jar deduplication.jar 1 /Users/fan/Documents
+    
+    The above command will choose fixed size chunking for directory /Users/fan/Documents. All the file inside that directory will be chunked into 1MB sized chunks. If duplicated chunks found, it will print out the file which contains the duplicated chunks.
+    
+    If want to use file based chunking, 2 need to be specified. Then if there is duplicated files in the given directory, the file name will be returned.
+    
+    3 is specified, then it will perform content defined chunking for given directory. For each file, it will return the number of chunks be generated and number of duplicated chunks.
